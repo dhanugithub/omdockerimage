@@ -66,7 +66,9 @@ WORKDIR ${OM_HOME}
 RUN tar -xzf ${work}/apache-openmeetings-${OM_VERSION}.tar.gz
 RUN wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_J_VER}/mysql-connector-java-${MYSQL_J_VER}.jar -P webapps/openmeetings/WEB-INF/lib
 
-RUN ${work}/om_install.sh
+WORKDIR ${work}
+RUN chmod a+x *.sh
+RUN ./om_install.sh
 
 EXPOSE 5080 1935
 USER ubuntu
