@@ -13,6 +13,6 @@
 # #############################################
 
 sudo chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && service mysql start
-
-sudo -u nobody ./bin/catalina.sh run
+sudo chmod 755 ./red5-debug.sh
+sudo -u nobody ./red5-debug.sh
 
