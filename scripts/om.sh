@@ -13,6 +13,6 @@
 # #############################################
 
 sudo chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && service mysql start
-#sudo chmod 755 ./red5-debug.sh
+sudo chmod 755 ${OM_HOME}/red5-debug.sh
 sudo -u nobody ${OM_HOME}/red5-debug.sh
 
