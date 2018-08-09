@@ -52,6 +52,7 @@ RUN adduser --home /home/ubuntu --shell /bin/bash ubuntu && echo "ubuntu ALL=(AL
 
 WORKDIR ${work}
 COPY scripts/* ./
+RUN chmod a+x *.sh
 RUN ./ffmpg.sh
 
 RUN echo "mysql-server mysql-server/root_password password ${DB_ROOT_PASS}" | debconf-set-selections
