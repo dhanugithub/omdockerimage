@@ -46,7 +46,7 @@ RUN apt-get install -y oracle-java8-installer
 RUN apt-get install -y libreoffice --no-install-recommends
 
 
-RUN adduser --home /home/ubuntu --shell /bin/bash ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod 4755 /etc/sudoers.d/ubuntu
+RUN useradd --d /home/ubuntu --ms /bin/bash ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod 0440 /etc/sudoers.d/ubuntu
 
 #RUN su - ubuntu
 
