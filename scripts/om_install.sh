@@ -13,7 +13,7 @@
 # #############################################
 
 if [ ! -d "/var/run/mysqld" ]; then
-	mkdir /var/run/mysqld
+	sudo mkdir /var/run/mysqld
 fi
 
 sudo chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && service mysql start
