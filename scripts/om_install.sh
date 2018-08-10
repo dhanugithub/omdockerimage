@@ -22,8 +22,8 @@ mysql -u root -p${DB_ROOT_PASS} -se "CREATE DATABASE ${OM_DB_NAME} DEFAULT CHARA
 mysql -u root -p${DB_ROOT_PASS} -se "CREATE USER '${OM_DB_USER}'@'localhost' IDENTIFIED BY '${OM_DB_PASS}'"
 mysql -u root -p${DB_ROOT_PASS} -se "grant all privileges on ${OM_DB_NAME}.* to '${OM_DB_USER}'@'localhost'"
 
-sudo chown -R nobody:nogroup ${OM_HOME}
-sudo -u nobody ./admin.sh -v -i -tz Europe/Berlin -email kulkarnidhana22@gmail.com -group nogroup \
+sudo chown -R ubuntu:ubuntu ${OM_HOME}
+sudo -u nubuntu ./admin.sh -v -i -tz Europe/Berlin -email kulkarnidhana22@gmail.com -group ubuntu \
 	-user ${OM_USER} --password ${OM_PASS} \
 	--db-type mysql --db-host localhost --db-name ${OM_DB_NAME} \
 	--db-user ${OM_DB_USER} --db-pass ${OM_DB_PASS}
