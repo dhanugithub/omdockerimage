@@ -23,7 +23,7 @@ mysql -u root -p${DB_ROOT_PASS} -se "CREATE USER '${OM_DB_USER}'@'localhost' IDE
 mysql -u root -p${DB_ROOT_PASS} -se "grant all privileges on ${OM_DB_NAME}.* to '${OM_DB_USER}'@'localhost'"
 
 sudo chown -R ubuntu:ubuntu ${OM_HOME}
-sudo -u nubuntu ./admin.sh -v -i -tz Europe/Berlin -email kulkarnidhana22@gmail.com -group ubuntu \
+sudo -u ubuntu ./admin.sh -v -i -tz Europe/Berlin -email kulkarnidhana22@gmail.com -group ubuntu \
 	-user ${OM_USER} --password ${OM_PASS} \
 	--db-type mysql --db-host localhost --db-name ${OM_DB_NAME} \
 	--db-user ${OM_DB_USER} --db-pass ${OM_DB_PASS}
