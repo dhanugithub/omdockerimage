@@ -72,5 +72,5 @@ RUN ${work}/om_install.sh
 
 EXPOSE 5080 1935
 
-RUN su - ubuntu
+USER ubuntu
 ENTRYPOINT [ "bash", "-c", "${work}/om.sh" ]
