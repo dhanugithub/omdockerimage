@@ -51,12 +51,12 @@ RUN useradd -d /home/ubuntu -ms /bin/bash ubuntu && echo "ubuntu ALL=(root) NOPA
 
 WORKDIR ${work}
 COPY scripts/* ./
-RUN sudo chmod a+x *.sh
+RUN chmod a+x *.sh
 RUN ./ffmpg.sh
 
-RUN sudo echo "mysql-server mysql-server/root_password password ${DB_ROOT_PASS}" | debconf-set-selections
-RUN sudo echo "mysql-server mysql-server/root_password_again password ${DB_ROOT_PASS}" | debconf-set-selections
-RUN sudo apt-get -y install mysql-server mysql-client
+RUN echo "mysql-server mysql-server/root_password password ${DB_ROOT_PASS}" | debconf-set-selections
+RUN echo "mysql-server mysql-server/root_password_again password ${DB_ROOT_PASS}" | debconf-set-selections
+RUN apt-get -y install mysql-server mysql-client
 
 WORKDIR ${work}
 RUN wget https://builds.apache.org/view/M-R/view/OpenMeetings/job/openmeetings/lastSuccessfulBuild/artifact/openmeetings-server/target/apache-openmeetings-5.0.0-SNAPSHOT.tar.gz -O apache-openmeetings-${OM_VERSION}.tar.gz
