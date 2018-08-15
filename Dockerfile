@@ -48,8 +48,6 @@ RUN apt-get install -y libreoffice --no-install-recommends
 
 
 RUN useradd -d /home/ubuntu -ms /bin/bash ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod 0440 /etc/sudoers.d/ubuntu
-USER ubuntu
-
 
 WORKDIR ${work}
 COPY scripts/* ./
@@ -74,4 +72,5 @@ RUN ${work}/om_install.sh
 
 EXPOSE 5080 1935
 
+USER ubuntu
 ENTRYPOINT [ "bash", "-c", "${work}/om.sh" ]
