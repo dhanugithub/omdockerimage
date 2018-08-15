@@ -13,16 +13,16 @@
 # #############################################
 
 if [ ! -d "/var/run/mysqld" ]; then
-	mkdir /var/run/mysqld
+	sudo mkdir /var/run/mysqld
 fi
 
-chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && service mysql start
+sudo chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && service mysql start
 
 mysql -u root -p${DB_ROOT_PASS} -se "CREATE DATABASE ${OM_DB_NAME} DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"
 mysql -u root -p${DB_ROOT_PASS} -se "CREATE USER '${OM_DB_USER}'@'localhost' IDENTIFIED BY '${OM_DB_PASS}'"
 mysql -u root -p${DB_ROOT_PASS} -se "grant all privileges on ${OM_DB_NAME}.* to '${OM_DB_USER}'@'localhost'"
 
-chown -R ubuntu:ubuntu ${OM_HOME}
+sudo chown -R ubuntu:ubuntu ${OM_HOME}
 sudo -u ubuntu ./admin.sh -v -i -tz Europe/Berlin -email kulkarnidhana22@gmail.com -group ubuntu \
 	-user ${OM_USER} --password ${OM_PASS} \
 	--db-type mysql --db-host localhost --db-name ${OM_DB_NAME} \
