@@ -31,27 +31,25 @@ ENV work /home/ubuntu/work
 ENV OM_HOME /home/ubuntu/opt/red5
 ENV MYSQL_J_VER '8.0.11'
 
+
+RUN cat /etc/issue
+
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+RUN apt-get update && sudo apt-get install -y --no-install-recommends apt-utils
+RUN apt-get install -y --no-install-recommends software-properties-common unzip make build-essential wget ghostscript libgs-dev imagemagick sox sudo
+
+RUN add-apt-repository -y ppa:webupd8team/java && apt-get update
+RUN echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 select true' | debconf-set-selections
+RUN echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true' | debconf-set-selections
+RUN apt-get install -y oracle-java8-installer
+
+RUN apt-get install -y libreoffice --no-install-recommends
+
+
 RUN sudo useradd -d /home/ubuntu -ms /bin/bash ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod 0440 /etc/sudoers.d/ubuntu
 USER ubuntu
 
-RUN sudo cat /etc/issue
-
-RUN sudo echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-
-RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends apt-utils
-RUN sudo apt-get install -y --no-install-recommends software-properties-common unzip make build-essential wget ghostscript libgs-dev imagemagick sox sudo
-
-RUN sudo add-apt-repository -y ppa:webupd8team/java && apt-get update
-RUN sudo echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 select true' | debconf-set-selections
-RUN sudo echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true' | debconf-set-selections
-RUN sudo apt-get install -y oracle-java8-installer
-
-RUN sudo apt-get install -y libreoffice --no-install-recommends
-
-#WORKDIR ${work}
-
-
-#RUN su - ubuntu
 
 WORKDIR ${work}
 COPY scripts/* ./
