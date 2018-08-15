@@ -46,9 +46,6 @@ RUN apt-get install -y oracle-java8-installer
 
 RUN apt-get install -y libreoffice --no-install-recommends
 
-
-RUN useradd -d /home/ubuntu -ms /bin/bash ubuntu && echo "ubuntu ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod 0440 /etc/sudoers.d/ubuntu
-
 WORKDIR ${work}
 COPY scripts/* ./
 RUN chmod a+x *.sh
@@ -72,5 +69,7 @@ RUN ${work}/om_install.sh
 
 EXPOSE 5080 1935
 
+RUN useradd -d /home/ubuntu -ms /bin/bash -r -u 1001 -g ubuntu ubuntu && echo "ubuntu ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod 0440 /etc/sudoers.d/ubuntu
 USER ubuntu
+
 ENTRYPOINT [ "bash", "-c", "${work}/om.sh" ]
