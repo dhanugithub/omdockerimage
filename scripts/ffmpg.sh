@@ -15,7 +15,7 @@
 # FFmpeg compilation for Ubuntu and Debian.
 # https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
 
-apt-get install -y autoconf automake build-essential libass-dev libfreetype6-dev libtheora-dev libtool libvorbis-dev pkg-config texinfo wget zlib1g-dev yasm libx264-dev libx265-dev libmp3lame-dev libopus-dev libvpx-dev libfdk-aac-dev
+sudo apt-get install -y autoconf automake build-essential libass-dev libfreetype6-dev libtheora-dev libtool libvorbis-dev pkg-config texinfo wget zlib1g-dev yasm libx264-dev libx265-dev libmp3lame-dev libopus-dev libvpx-dev libfdk-aac-dev
 
 # Create a directory for sources.
 FFMPEG=${work}/ffmpeg
