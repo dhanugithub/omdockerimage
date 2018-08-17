@@ -14,5 +14,5 @@
 
 sudo chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && service mysql start
 
-sudo -u nobody ./bin/catalina.sh run
+su - nobody ./bin/catalina.sh run
 
