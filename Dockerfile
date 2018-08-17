@@ -70,6 +70,6 @@ RUN ${work}/scripts/om_install.sh
 
 EXPOSE 5080 1935
 
-USER 1001
+USER nobody
 
 ENTRYPOINT [ "uid_entrypoint", "bash", "-c", "${work}/scripts/om.sh" ]
