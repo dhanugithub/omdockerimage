@@ -48,7 +48,7 @@ RUN apt-get install -y libreoffice --no-install-recommends
 
 WORKDIR ${work}
 COPY scripts/* ./
-RUN chmod a+x *.sh
+RUN chmod -R u+x *.sh && chgrp -R 0 *.sh && chmod -R g=u *.sh /etc/passwd
 RUN ./ffmpg.sh
 
 RUN echo "mysql-server mysql-server/root_password password ${DB_ROOT_PASS}" | debconf-set-selections
@@ -63,12 +63,12 @@ WORKDIR ${OM_HOME}
 RUN tar -xzf ${work}/apache-openmeetings-${OM_VERSION}.tar.gz
 RUN wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_J_VER}/mysql-connector-java-${MYSQL_J_VER}.jar -P webapps/openmeetings/WEB-INF/lib
 
-RUN groupadd -r ubuntu && useradd -d /home/ubuntu -ms /bin/bash -r -u 1001 -g ubuntu ubuntu && echo "ubuntu ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod 0440 /etc/sudoers.d/ubuntu
+#RUN groupadd -r ubuntu && useradd -d /home/ubuntu -ms /bin/bash -r -u 1001 -g ubuntu ubuntu && echo "ubuntu ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod 0440 /etc/sudoers.d/ubuntu
 
 RUN ${work}/om_install.sh
 
 EXPOSE 5080 1935
 
-USER ubuntu
+USER 1001
 
 ENTRYPOINT [ "bash", "-c", "${work}/om.sh" ]
