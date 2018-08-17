@@ -28,7 +28,7 @@ ENV OM_DB_PASS '12345'
 ENV OM_USER 'om_admin'
 ENV OM_PASS '1Q2w3e4r5t^y'
 ENV work /home/ubuntu/work
-ENV PATH=${work}/:${PATH} HOME=${work}
+ENV PATH=${work}/scripts:${PATH} HOME=${work}
 ENV OM_HOME /home/ubuntu/opt/red5
 ENV MYSQL_J_VER '8.0.11'
 
@@ -48,8 +48,8 @@ RUN apt-get install -y oracle-java8-installer
 RUN apt-get install -y libreoffice --no-install-recommends
 
 WORKDIR ${work}
-COPY scripts/* ./
-RUN chmod -R u+x ${work}/*.sh && chgrp -R 0 ${work} && chmod -R g=u ${work} /etc/passwd
+COPY scripts/* ./scripts/
+RUN chmod -R u+x ${work}/scripts && chgrp -R 0 ${work} && chmod -R g=u ${work} /etc/passwd
 RUN ./ffmpg.sh
 
 RUN echo "mysql-server mysql-server/root_password password ${DB_ROOT_PASS}" | debconf-set-selections
