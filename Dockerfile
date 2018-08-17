@@ -71,4 +71,4 @@ EXPOSE 5080 1935
 
 USER 1001
 
-ENTRYPOINT [ "bash", "-c", "${work}/om.sh" ]
+ENTRYPOINT [ "uid_entrypoint", "bash", "-c", "${work}/om.sh" ]
