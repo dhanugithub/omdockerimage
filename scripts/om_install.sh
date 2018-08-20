@@ -18,9 +18,9 @@ fi
 
 chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && service mysql start
 
-mysql -u nobody -p${DB_ROOT_PASS} -se "CREATE DATABASE ${OM_DB_NAME} DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"
-mysql -u nobody -p${DB_ROOT_PASS} -se "CREATE USER '${OM_DB_USER}'@'localhost' IDENTIFIED BY '${OM_DB_PASS}'"
-mysql -u nobody -p${DB_ROOT_PASS} -se "grant all privileges on ${OM_DB_NAME}.* to '${OM_DB_USER}'@'localhost'"
+mysql -u root -p${DB_ROOT_PASS} -se "CREATE DATABASE ${OM_DB_NAME} DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"
+mysql -u root -p${DB_ROOT_PASS} -se "CREATE USER '${OM_DB_USER}'@'localhost' IDENTIFIED BY '${OM_DB_PASS}'"
+mysql -u root -p${DB_ROOT_PASS} -se "grant all privileges on ${OM_DB_NAME}.* to '${OM_DB_USER}'@'localhost'"
 
 chown -R nobody:nogroup ${OM_HOME}
 su - nobody ./admin.sh -v -i -tz Europe/Berlin -email kulkarnidhana22@gmail.com -group group \
