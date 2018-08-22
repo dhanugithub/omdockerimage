@@ -49,7 +49,7 @@ RUN apt-get install -y libreoffice --no-install-recommends
 
 WORKDIR ${work}
 COPY scripts/* ./scripts/
-RUN chmod -R u+x ${work}/scripts && chgrp -R 0 ${work} && chmod -R g=u ${work} /etc/passwd
+RUN chmod -R u+x ${work}/scripts && chgrp -R 1001 ${work} && chmod -R g=u ${work} /etc/passwd
 RUN ./scripts/ffmpg.sh
 
 RUN echo "mysql-server mysql-server/root_password password ${DB_ROOT_PASS}" | debconf-set-selections
