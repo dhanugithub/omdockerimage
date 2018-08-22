@@ -64,7 +64,7 @@ WORKDIR ${OM_HOME}
 RUN tar -xzf ${work}/apache-openmeetings-${OM_VERSION}.tar.gz
 RUN wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_J_VER}/mysql-connector-java-${MYSQL_J_VER}.jar -P webapps/openmeetings/WEB-INF/lib
 
-RUN groupadd -r -g 1001 ubuntu && useradd -d /home/ubuntu -ms /bin/bash -r -u 1000 ubuntu -g 1001 ubuntu && echo "ubuntu ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod 0440 /etc/sudoers.d/ubuntu
+RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1000 ubuntu -g 1001 -d /home/ubuntu -ms /bin/bash ubuntu && echo "ubuntu ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod 0440 /etc/sudoers.d/ubuntu
 
 RUN ${work}/scripts/om_install.sh
 
