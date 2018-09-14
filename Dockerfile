@@ -15,7 +15,7 @@
 FROM ubuntu:16.04
 ENV OM_VER_MAJ '4'
 ENV OM_VER_MIN '0'
-ENV OM_VER_MIC '4'
+ENV OM_VER_MIC '5'
 ENV OM_VERSION "${OM_VER_MAJ}.${OM_VER_MIN}.${OM_VER_MIC}"
 LABEL vendor="Apache OpenMeetings dev team"
 LABEL version="${OM_VERSION}"
@@ -30,7 +30,7 @@ ENV OM_PASS '1Q2w3e4r5t^y'
 ENV work /home/ubuntu/work
 #ENV PATH=${work}/scripts:${PATH} HOME=${work}
 ENV OM_HOME /home/ubuntu/opt/red5
-ENV MYSQL_J_VER '8.0.11'
+ENV MYSQL_J_VER '8.0.12'
 
 
 RUN cat /etc/issue
