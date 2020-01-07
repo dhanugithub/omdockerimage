@@ -43,13 +43,16 @@ RUN apt-get install -y --no-install-recommends software-properties-common unzip 
 #RUN mkdir -p /var/cache/oracle-jdk11-installer-local
 #RUN cp Downloads/jdk-11.0.5_linux-x64_bin.tar.gz /var/cache/oracle-jdk11-installer-local/
 
-RUN add-apt-repository -y ppa:linuxuprising/java && apt-get update
-RUN echo 'oracle-java12-installer shared/accepted-oracle-license-v1-2 select true' | debconf-set-selections
-RUN echo 'oracle-java12-installer shared/accepted-oracle-license-v1-2 seen true' | debconf-set-selections
-#RUN apt-get install -y oracle-java8-installer
+RUN add-apt-repository ppa:openjdk-r/ppa
+RUN apt-get update && apt-get install openjdk-8-jdk
 
-RUN apt-get install -y oracle-java12-installer
-RUN apt-get install oracle-java12-set-default
+
+#RUN add-apt-repository -y ppa:linuxuprising/java && apt-get update
+#RUN echo 'oracle-java12-installer shared/accepted-oracle-license-v1-2 select true' | debconf-set-selections
+#RUN echo 'oracle-java12-installer shared/accepted-oracle-license-v1-2 seen true' | debconf-set-selections
+#RUN apt-get install -y oracle-java8-installer
+#RUN apt-get install -y oracle-java12-installer
+#RUN apt-get install oracle-java12-set-default
 
 RUN java --version
 
