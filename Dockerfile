@@ -41,11 +41,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install -y --no-install-recommends software-properties-common unzip make build-essential wget ghostscript libgs-dev imagemagick sox sudo
 
 RUN add-apt-repository -y ppa:linuxuprising/java && apt-get update
-RUN echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 select true' | debconf-set-selections
-RUN echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true' | debconf-set-selections
+RUN echo 'oracle-java11-installer shared/accepted-oracle-license-v1-2 select true' | debconf-set-selections
+RUN echo 'oracle-java11-installer shared/accepted-oracle-license-v1-2 seen true' | debconf-set-selections
 #RUN apt-get install -y oracle-java8-installer
 
+sudo mkdir -p /var/cache/oracle-jdk11-installer-local
+sudo cp jdk-11.0.5_linux-x64_bin.tar.gz /var/cache/oracle-jdk11-installer-local/
+
+
 RUN apt-get install -y oracle-java11-installer-local
+
 RUN apt-get install oracle-java11-set-default-local
 
 RUN java --version
