@@ -45,11 +45,10 @@ RUN echo 'oracle-java11-installer shared/accepted-oracle-license-v1-2 select tru
 RUN echo 'oracle-java11-installer shared/accepted-oracle-license-v1-2 seen true' | debconf-set-selections
 #RUN apt-get install -y oracle-java8-installer
 
-RUN apt-get install -y oracle-java11-installer-local
-
 RUN mkdir -p /var/cache/oracle-jdk11-installer-local
 RUN cp jdk-11.0.5_linux-x64_bin.tar.gz /var/cache/oracle-jdk11-installer-local/
 
+RUN apt-get install -y oracle-java11-installer-local
 RUN apt-get install oracle-java11-set-default-local
 
 RUN java --version
