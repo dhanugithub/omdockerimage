@@ -45,7 +45,7 @@ RUN add-apt-repository -y ppa:linuxuprising/java && apt-get update
 #RUN echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true' | debconf-set-selections
 #RUN apt-get install -y oracle-java8-installer
 
-#RUN apt-get install -y oracle-java11-installer
+RUN apt-get install -y oracle-java11-installer-local
 RUN apt-get install oracle-java11-set-default-local
 
 RUN java --version
