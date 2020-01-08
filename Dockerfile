@@ -96,6 +96,11 @@ RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1000 -g 1001 -d /home/ubuntu -s 
 
 EXPOSE ${PORTS}
 
+WORKDIR ${work}
+COPY scripts/* ./
+
+RUN chmod a+x ${work}/*
+
 USER 1001
 
 ENTRYPOINT [ "uid_entrypoint", "bash", "-c", "${work}/om.sh" ]
