@@ -12,64 +12,90 @@
 # limitations under the License.
 # #############################################
 
-FROM ubuntu:16.04
-ENV OM_VER_MAJ '5'
-ENV OM_VER_MIN '0'
-ENV OM_VER_MIC '0'
-ENV OM_VERSION "${OM_VER_MAJ}.${OM_VER_MIN}.${OM_VER_MIC}"
+FROM ubuntu:18.04
+ENV OM_VER_MAJ='5'
+ENV OM_VER_MIN='0'
+ENV OM_VER_MIC='0-M3'
+ENV OM_VERSION="${OM_VER_MAJ}.${OM_VER_MIN}.${OM_VER_MIC}"
 LABEL vendor="Apache OpenMeetings dev team"
 LABEL version="${OM_VERSION}"
 LABEL maintainer=dev@openmeetings.apache.org
 
+ARG BUILD_TYPE="min"
+ENV OM_TYPE=${BUILD_TYPE}
 ENV DB_ROOT_PASS '12345'
-ENV OM_DB_NAME "open${OM_VER_MAJ}_${OM_VER_MIN}_${OM_VER_MIC}"
-ENV OM_DB_USER 'om_admin'
-ENV OM_DB_PASS '12345'
-ENV OM_USER 'om_admin'
-ENV OM_PASS '1Q2w3e4r5t^y'
-ENV work /home/ubuntu/work
-ENV PATH=${work}/scripts:${PATH} HOME=${work}
-ENV OM_HOME /home/ubuntu/opt/red5
-ENV MYSQL_J_VER '8.0.11'
-
-
-RUN cat /etc/issue
-
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-
-RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
-RUN apt-get install -y --no-install-recommends software-properties-common unzip make build-essential wget ghostscript libgs-dev imagemagick sox sudo
-
-RUN add-apt-repository -y ppa:webupd8team/java && apt-get update
-RUN echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 select true' | debconf-set-selections
-RUN echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true' | debconf-set-selections
-RUN apt-get install -y oracle-java8-installer
-
-RUN apt-get install -y libreoffice --no-install-recommends
-
-WORKDIR ${work}
-COPY scripts/* ./scripts/
-RUN chmod -R u+x ${work}/scripts && chgrp -R 1001 ${work} && chmod -R g=u ${work} /etc/passwd
-RUN ./scripts/ffmpg.sh
-
-RUN echo "mysql-server mysql-server/root_password password ${DB_ROOT_PASS}" | debconf-set-selections
-RUN echo "mysql-server mysql-server/root_password_again password ${DB_ROOT_PASS}" | debconf-set-selections
-RUN apt-get -y install mysql-server mysql-client
-
-WORKDIR ${work}
-RUN wget https://builds.apache.org/view/M-R/view/OpenMeetings/job/openmeetings/lastSuccessfulBuild/artifact/openmeetings-server/target/apache-openmeetings-5.0.0-SNAPSHOT.tar.gz -O apache-openmeetings-${OM_VERSION}.tar.gz
-
+ENV OM_USER="om_admin"
+ENV OM_PASS="1Q2w3e4r5t^y"
+ENV DAEMON_USER="nobody"
+ENV DAEMON_UID="65534"
+ENV OM_DB_NAME="openmeetings"
+ENV OM_DB_TYPE="mysql"
+ENV OM_DB_HOST="localhost"
+ENV OM_DB_PORT="3306"
+ENV OM_DB_USER="om_admin"
+ENV OM_DB_PASS="12345"
+ENV OM_KURENTO_WS_URL="ws://127.0.0.1:8888/kurento"
+ENV TURN_URL=""
+ENV TURN_USER=""
+ENV TURN_PASS=""
+ENV OM_DATA_DIR="/opt/omdata"
+ENV work=/opt
+ENV OM_HOME=/opt/openmeetings
+ENV MYSQL_J_VER="8.0.18"
+ENV DB2_J_VER="11.5.0.0"
+ENV PORTS=5443
 
 WORKDIR ${OM_HOME}
-RUN tar -xzf ${work}/apache-openmeetings-${OM_VERSION}.tar.gz
-RUN wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_J_VER}/mysql-connector-java-${MYSQL_J_VER}.jar -P webapps/openmeetings/WEB-INF/lib
+RUN cat /etc/issue \
+  \
+  && echo "OM server of type ${OM_TYPE} will be built" \
+  \
+  && apt-get update && apt-get install -y --no-install-recommends \
+    apt-utils \
+  && apt-get install -y --no-install-recommends \
+    software-properties-common \
+    gnupg2 \
+    dirmngr \
+    unzip \
+    wget \
+    ghostscript \
+    libgs-dev \
+    imagemagick \
+    sox \
+    sudo \
+    libreoffice \
+    openjdk-11-jre \
+    ffmpeg \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* \
+  \
+  && wget "https://archive.apache.org/dist/openmeetings/${OM_VERSION}/bin/apache-openmeetings-${OM_VERSION}.tar.gz" -O ${work}/om.tar.gz \
+  && wget "https://archive.apache.org/dist/openmeetings/${OM_VERSION}/bin/apache-openmeetings-${OM_VERSION}.tar.gz.asc" -O ${work}/om.asc \
+  && export GNUPGHOME="$(mktemp -d)" \
+  && for server in hkp://ipv4.pool.sks-keyservers.net:80 \
+                     hkp://ha.pool.sks-keyservers.net:80 \
+                     hkp://pgp.mit.edu:80 \
+                     hkp://keyserver.pgp.com:80 \
+    ; do \
+      gpg --keyserver "$server" --recv-keys 8456901E && break || echo "Trying new server..." \
+    ; done \
+  && gpg --batch --verify ${work}/om.asc ${work}/om.tar.gz \
+  && tar -xzf ${work}/om.tar.gz --strip-components=1 -C ${OM_HOME}/ \
+  && rm -rf ${GNUPGHOME} ${work}/om.asc ${work}/om.tar.gz \
+  && wget https://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_J_VER}/mysql-connector-java-${MYSQL_J_VER}.jar -P ${OM_HOME}/webapps/openmeetings/WEB-INF/lib \
+  && wget https://repo1.maven.org/maven2/com/ibm/db2/jcc/${DB2_J_VER}/jcc-${DB2_J_VER}.jar -P ${OM_HOME}/webapps/openmeetings/WEB-INF/lib \
+  && sed -i 's|<policy domain="coder" rights="none" pattern="PS" />|<!--policy domain="coder" rights="none" pattern="PS" />|g; s|<policy domain="coder" rights="none" pattern="XPS" />|<policy domain="coder" rights="none" pattern="XPS" /-->|g' /etc/ImageMagick-6/policy.xml
+
+WORKDIR ${work}
+COPY scripts/*.sh ./
+
+RUN chmod a+x ${work}/*.sh \
+  && ./om_install.sh
 
 RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1000 -g 1001 -d /home/ubuntu -s /bin/bash ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu
 
-RUN ${work}/scripts/om_install.sh
+EXPOSE ${PORTS}
 
-EXPOSE 5080 1935
+USER 1001
 
-USER ubuntu
-
-ENTRYPOINT [ "uid_entrypoint", "bash", "-c", "${work}/scripts/om.sh" ]
+ENTRYPOINT [ "uid_entrypoint", "bash", "-c", "${work}/om.sh" ]
