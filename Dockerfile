@@ -104,4 +104,4 @@ RUN chmod a+x ${work}/*
 
 USER 1001
 
-ENTRYPOINT [ "uid_entrypoint", "bash", "-c", "${work}/om.sh" ]
+ENTRYPOINT [ "${work}/uid_entrypoint", "bash", "-c", "${work}/om.sh" ]
