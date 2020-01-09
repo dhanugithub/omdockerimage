@@ -61,7 +61,8 @@ RUN apt-get install -y libreoffice --no-install-recommends
 
 WORKDIR ${work}
 COPY scripts/* ./scripts/
-RUN chmod -R a+x ${work}/scripts/* && chgrp -R 1001 ${work} && chmod -R g=u ${work} /etc/passwd
+RUN chmod -R a+x ${work}/scripts/* && chgrp -R 1001 ${work} && chmod -R g=u ${work} 
+RUN chmod -R g=u /etc/passwd
 RUN ./scripts/ffmpg.sh
 
 RUN echo "mysql-server mysql-server/root_password password ${DB_ROOT_PASS}" | debconf-set-selections
@@ -75,7 +76,7 @@ WORKDIR ${OM_HOME}
 RUN tar -xzf ${work}/apache-openmeetings-${OM_VERSION}.tar.gz
 RUN wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_J_VER}/mysql-connector-java-${MYSQL_J_VER}.jar -P webapps/openmeetings/WEB-INF/lib
 
-RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/ubuntu && chmod -R 0440 /etc/sudoers.d/ubuntu
+RUN groupadd -r -g 0 ubuntu && useradd -r -u 0 -g 1001 -d /home/ubuntu -s /bin/bash -G root ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/ubuntu && chmod -R 0440 /etc/sudoers.d/ubuntu
 
 RUN ${work}/scripts/om_install.sh
 
