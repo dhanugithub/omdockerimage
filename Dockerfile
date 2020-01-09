@@ -12,7 +12,7 @@
 # limitations under the License.
 # #############################################
 
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 ENV OM_VER_MAJ '4'
 ENV OM_VER_MIN '0'
 ENV OM_VER_MIC '10'
@@ -75,7 +75,7 @@ WORKDIR ${OM_HOME}
 RUN tar -xzf ${work}/apache-openmeetings-${OM_VERSION}.tar.gz
 RUN wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_J_VER}/mysql-connector-java-${MYSQL_J_VER}.jar -P webapps/openmeetings/WEB-INF/lib
 
-RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod -R 0440 /etc/sudoers.d/ubuntu
+RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/ubuntu && chmod -R 0440 /etc/sudoers.d/ubuntu
 
 RUN ${work}/scripts/om_install.sh
 
