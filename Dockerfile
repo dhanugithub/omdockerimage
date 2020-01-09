@@ -92,7 +92,8 @@ COPY scripts/*.sh ./
 RUN chmod a+x ${work}/*.sh \
   && ./om_install.sh
 
-RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1000 -g 1001 -d /home/ubuntu -s /bin/bash ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu
+RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod -R 0440 /etc/sudoers.d/ubuntu
+
 
 EXPOSE ${PORTS}
 
