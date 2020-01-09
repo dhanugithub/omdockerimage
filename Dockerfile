@@ -12,7 +12,7 @@
 # limitations under the License.
 # #############################################
 
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 ENV OM_VER_MAJ '4'
 ENV OM_VER_MIN '0'
 ENV OM_VER_MIC '10'
@@ -81,6 +81,6 @@ RUN ${work}/scripts/om_install.sh
 
 EXPOSE 5080 1935
 
-USER ubuntu
+USER 1001
 
 ENTRYPOINT [ "uid_entrypoint", "bash", "-c", "${work}/scripts/om.sh" ]
