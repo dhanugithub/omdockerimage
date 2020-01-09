@@ -88,7 +88,7 @@ RUN cat /etc/issue \
   && sed -i 's|<policy domain="coder" rights="none" pattern="PS" />|<!--policy domain="coder" rights="none" pattern="PS" />|g; s|<policy domain="coder" rights="none" pattern="XPS" />|<policy domain="coder" rights="none" pattern="XPS" /-->|g' /etc/ImageMagick-6/policy.xml
 
 WORKDIR ${work}
-RUN chmod a+x scripts
+#RUN chmod a+x scripts
 COPY scripts/*.sh ./
 
 RUN chmod a+x ${work}/*.sh \
