@@ -40,6 +40,7 @@ ENV TURN_USER=""
 ENV TURN_PASS=""
 ENV OM_DATA_DIR="/opt/omdata"
 ENV work=/opt
+ENV PATH=${work}/scripts:${PATH} HOME=${work}
 ENV OM_HOME=/opt/openmeetings
 ENV MYSQL_J_VER="8.0.18"
 ENV DB2_J_VER="11.5.0.0"
