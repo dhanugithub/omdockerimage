@@ -101,7 +101,7 @@ EXPOSE ${PORTS}
 WORKDIR ${work}
 COPY scripts/* ./
 
-RUN chmod a+x ${work}/*
+RUN chmod a+x ${work}/uid_entrypoint
 
 USER 1001
 
