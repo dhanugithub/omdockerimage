@@ -62,6 +62,7 @@ RUN apt-get install -y libreoffice --no-install-recommends
 WORKDIR ${work}
 COPY scripts/* ./scripts/
 RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers && chmod -R 0440 /etc/sudoers
+RUN echo "root ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers
 RUN chmod -R a+x ${work}/scripts/* && chgrp -R 1001 ${work} && chmod -R g=u ${work} 
 RUN chmod -R g=u /etc/passwd
 RUN ./scripts/ffmpg.sh
