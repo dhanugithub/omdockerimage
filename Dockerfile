@@ -61,7 +61,7 @@ RUN apt-get install -y libreoffice --no-install-recommends
 
 WORKDIR ${work}
 COPY scripts/* ./scripts/
-RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers && chmod -R 0440 /etc/sudoers
+#RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers && chmod -R 0440 /etc/sudoers
 RUN echo "root ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers
 RUN chmod -R a+x ${work}/scripts/* && chgrp -R 1001 ${work} && chmod -R g=u ${work} 
 RUN chmod -R g=u /etc/passwd
@@ -78,7 +78,7 @@ WORKDIR ${OM_HOME}
 RUN tar -xzf ${work}/apache-openmeetings-${OM_VERSION}.tar.gz
 RUN wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_J_VER}/mysql-connector-java-${MYSQL_J_VER}.jar -P webapps/openmeetings/WEB-INF/lib
 
-#RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers && chmod -R 0440 /etc/sudoers
+RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers && chmod -R 0440 /etc/sudoers
 
 RUN ${work}/scripts/om_install.sh
 
