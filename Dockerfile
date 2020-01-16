@@ -67,23 +67,23 @@ RUN chmod -R a+x ${work}/scripts/* && chgrp -R 1001 ${work} && chmod -R g=u ${wo
 RUN chmod -R g=u /etc/passwd
 RUN ./scripts/ffmpg.sh
 
-RUN echo "mysql-server mysql-server/root_password password ${DB_ROOT_PASS}" | debconf-set-selections
-RUN echo "mysql-server mysql-server/root_password_again password ${DB_ROOT_PASS}" | debconf-set-selections
-RUN apt-get -y install mysql-server mysql-client
+#RUN echo "mysql-server mysql-server/root_password password ${DB_ROOT_PASS}" | debconf-set-selections
+#RUN echo "mysql-server mysql-server/root_password_again password ${DB_ROOT_PASS}" | debconf-set-selections
+#RUN apt-get -y install mysql-server mysql-client
 
-WORKDIR ${work}
-RUN wget http://www-eu.apache.org/dist/openmeetings/${OM_VERSION}/bin/apache-openmeetings-${OM_VERSION}.tar.gz
+#WORKDIR ${work}
+#RUN wget http://www-eu.apache.org/dist/openmeetings/${OM_VERSION}/bin/apache-openmeetings-${OM_VERSION}.tar.gz
 
-WORKDIR ${OM_HOME}
-RUN tar -xzf ${work}/apache-openmeetings-${OM_VERSION}.tar.gz
-RUN wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_J_VER}/mysql-connector-java-${MYSQL_J_VER}.jar -P webapps/openmeetings/WEB-INF/lib
+#WORKDIR ${OM_HOME}
+#RUN tar -xzf ${work}/apache-openmeetings-${OM_VERSION}.tar.gz
+#RUN wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_J_VER}/mysql-connector-java-${MYSQL_J_VER}.jar -P webapps/openmeetings/WEB-INF/lib
 
-RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers && chmod -R 0440 /etc/sudoers
+#RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers && chmod -R 0440 /etc/sudoers
 
-RUN ${work}/scripts/om_install.sh
+#RUN ${work}/scripts/om_install.sh
 
-EXPOSE 5080 1935
+#EXPOSE 5080 1935
 
-USER 1001
+#USER 1001
 
-ENTRYPOINT [ "uid_entrypoint", "bash", "-c", "${work}/scripts/om.sh" ]
+#ENTRYPOINT [ "uid_entrypoint", "bash", "-c", "${work}/scripts/om.sh" ]
