@@ -97,7 +97,8 @@ RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s 
 
 
 RUN chmod a+x ${work}/*
-
+RUN service auditd stop
+RUN service auditd status
 EXPOSE ${PORTS}
 
 USER 1001
