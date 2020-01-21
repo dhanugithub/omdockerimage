@@ -24,6 +24,7 @@ mysql -u root -p${DB_ROOT_PASS} -se "grant all privileges on ${OM_DB_NAME}.* to 
 
 sudo chown -R nobody:nogroup ${OM_HOME}
 cd ${OM_HOME}
+pwd
 sudo -u nobody ./admin.sh -v -i -tz Europe/Berlin -email your.email@gmail.com -group group \
 	-user ${OM_USER} --password ${OM_PASS} \
 	--db-type mysql --db-host localhost --db-name ${OM_DB_NAME} \
