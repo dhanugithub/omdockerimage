@@ -48,7 +48,7 @@ ENV PATH=${work}:${PATH} HOME=${work}
 
 
 
-RUN setenforce 0
+#RUN setenforce 0
 WORKDIR ${OM_HOME}
 RUN cat /etc/issue \
   \
