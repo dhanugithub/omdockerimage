@@ -88,14 +88,15 @@ RUN cat /etc/issue \
   && sed -i 's|<policy domain="coder" rights="none" pattern="PS" />|<!--policy domain="coder" rights="none" pattern="PS" />|g; s|<policy domain="coder" rights="none" pattern="XPS" />|<policy domain="coder" rights="none" pattern="XPS" /-->|g' /etc/ImageMagick-6/policy.xml
 
 WORKDIR ${work}
-COPY scripts/*.sh ./
+COPY scripts/* ./
 
 RUN chmod a+x ${work}/*.sh \
   && ./om_install.sh
 
 RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod -R 0440 /etc/sudoers.d/ubuntu
 
-RUN chmod a+x ${work}/scripts/*
+
+RUN chmod a+x ${work}/*
 
 EXPOSE ${PORTS}
 
