@@ -44,6 +44,7 @@ ENV OM_HOME=/opt/openmeetings
 ENV MYSQL_J_VER="8.0.18"
 ENV DB2_J_VER="11.5.0.0"
 ENV PORTS=5443
+ENV PATH=${work}/scripts:${PATH} HOME=${work}
 
 WORKDIR ${OM_HOME}
 RUN cat /etc/issue \
@@ -94,6 +95,7 @@ RUN chmod a+x ${work}/*.sh \
 
 RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s /bin/bash -G sudo ubuntu && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && chmod -R 0440 /etc/sudoers.d/ubuntu
 
+RUN chmod a+x ${work}/scripts/*
 
 EXPOSE ${PORTS}
 
