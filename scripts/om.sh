@@ -15,13 +15,17 @@
 
 . ${work}/om_euser.sh
 echo "OM server of type ${OM_TYPE} will be run"
-sudo chmod a+x ${CLASSES_HOME}
-sudo chmod a+x ${DB_CFG_HOME}
+#sudo chmod a+x ${CLASSES_HOME}
+#sudo chmod a+x ${DB_CFG_HOME}
 if [ "${OM_TYPE}" == "min" ]; then
 	CLASSES_HOME=${OM_HOME}/webapps/openmeetings/WEB-INF/classes
 	DB_CFG_HOME=${CLASSES_HOME}/META-INF
 	sudo cp ${DB_CFG_HOME}/${OM_DB_TYPE}_persistence.xml ${DB_CFG_HOME}/persistence.xml
+	sudo chmod 777 ${DB_CFG_HOME}
 	sudo chmod 777 ${DB_CFG_HOME}/*
+	sudo chmod 777 ${CLASSES_HOME}
+	sudo chmod 777 ${CLASSES_HOME}/*
+	
 	case ${OM_DB_TYPE} in
 		db2)
 			sed -i "s|localhost:50000/openmeetings|${OM_DB_HOST}:${OM_DB_PORT}/${OM_DB_NAME}|g" ${DB_CFG_HOME}/persistence.xml
