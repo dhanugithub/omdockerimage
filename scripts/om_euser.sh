@@ -13,17 +13,17 @@
 # limitations under the License.
 # #############################################
 if [[ `id -u ${DAEMON_USER} 2>/dev/null || echo -1` < 0 ]]; then
-	useradd -l -u ${DAEMON_UID} ${DAEMON_USER}
+	sudo useradd -l -u ${DAEMON_UID} ${DAEMON_USER}
 fi
 if [ ! -d "${OM_HOME}/logs" ]; then
-	mkdir ${OM_HOME}/logs
+	sudo mkdir ${OM_HOME}/logs
 fi
-chown -R ${DAEMON_USER} ${OM_HOME}
+sudo chown -R ${DAEMON_USER} ${OM_HOME}
 
 if [ "${OM_TYPE}" != "min" ]; then
 	if [ ! -d "/var/run/mysqld" ]; then
-		mkdir /var/run/mysqld
+		sudo mkdir /var/run/mysqld
 	fi
 
-	chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && service mysql restart
+	sudo chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && service mysql restart
 fi
