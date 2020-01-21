@@ -15,6 +15,8 @@
 
 . ${work}/om_euser.sh
 echo "OM server of type ${OM_TYPE} will be run"
+sudo chmod a+x ${CLASSES_HOME}
+sudo chmod a+x ${DB_CFG_HOME}
 if [ "${OM_TYPE}" == "min" ]; then
 	CLASSES_HOME=${OM_HOME}/webapps/openmeetings/WEB-INF/classes
 	DB_CFG_HOME=${CLASSES_HOME}/META-INF
