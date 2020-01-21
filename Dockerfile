@@ -46,6 +46,9 @@ ENV DB2_J_VER="11.5.0.0"
 ENV PORTS=5443
 ENV PATH=${work}:${PATH} HOME=${work}
 
+
+
+RUN setenforce 0
 WORKDIR ${OM_HOME}
 RUN cat /etc/issue \
   \
@@ -97,8 +100,8 @@ RUN groupadd -r -g 1001 ubuntu && useradd -r -u 1001 -g 1001 -d /home/ubuntu -s 
 
 
 RUN chmod a+x ${work}/*
-RUN systemctl stop auditd
-RUN systemctl status auditd
+#RUN systemctl stop auditd
+#RUN systemctl status auditd
 EXPOSE ${PORTS}
 
 USER 1001
