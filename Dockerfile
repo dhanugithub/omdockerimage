@@ -12,7 +12,7 @@
 # limitations under the License.
 # #############################################
 
-FROM quay.io/dhanugithub/openmeetings/latest
+FROM quay.io/dhanugithub/openmeetings
 #ENV OM_VER_MAJ '4'
 #ENV OM_VER_MIN '0'
 #ENV OM_VER_MIC '10'
