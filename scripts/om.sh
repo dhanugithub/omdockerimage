@@ -26,9 +26,14 @@ if [ "${OM_TYPE}" == "min" ]; then
 	sudo chmod a+rwx /opt/openmeetings/webapps/openmeetings/WEB-INF/classes/
 	sudo chmod a+rwx /opt/openmeetings/webapps/openmeetings/WEB-INF/classes/*
 	
+	sudo chown -R ubuntu /opt/openmeetings/webapps/openmeetings/WEB-INF/classes/META-INF/*
+	sudo chown -R ubuntu /opt/openmeetings/webapps/openmeetings/WEB-INF/classes/META-INF/persistence.xml
+	sudo chown -R ubuntu /opt/openmeetings/webapps/openmeetings/WEB-INF/classes/
+	sudo chown -R ubuntu /opt/openmeetings/webapps/openmeetings/WEB-INF/classes/*
+	
 	case ${OM_DB_TYPE} in
 		db2)
-			sed -i "s|localhost:50000/openmeetings|${OM_DB_HOST}:${OM_DB_PORT}/${OM_DB_NAME}|g" ${DB_CFG_HOME}/persistence.xml
+			sed -i "s|localhost:50000/openmeet|${OM_DB_HOST}:${OM_DB_PORT}/${OM_DB_NAME}|g" ${DB_CFG_HOME}/persistence.xml
 		;;
 		mssql)
 			sed -i "s|localhost:1433;databaseName=openmeetings|${OM_DB_HOST}:${OM_DB_PORT};databaseName=${OM_DB_NAME}|g" ${DB_CFG_HOME}/persistence.xml
