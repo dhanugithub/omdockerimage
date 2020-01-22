@@ -21,6 +21,7 @@ if [ "${OM_TYPE}" == "min" ]; then
 	CLASSES_HOME=${OM_HOME}/webapps/openmeetings/WEB-INF/classes
 	DB_CFG_HOME=${CLASSES_HOME}/META-INF
 	sudo cp ${DB_CFG_HOME}/${OM_DB_TYPE}_persistence.xml ${DB_CFG_HOME}/persistence.xml
+	sudo restorecon -v /opt/openmeetings/webapps/openmeetings/WEB-INF/classes/META-INF/persistence.xml
 	sudo chmod a+rwx /opt/openmeetings/webapps/openmeetings/WEB-INF/classes/META-INF/sed*
 	sudo chmod a+rwx /opt/openmeetings/webapps/openmeetings/WEB-INF/classes/META-INF/persistence.xml
 	sudo chmod a+rwx /opt/openmeetings/webapps/openmeetings/WEB-INF/classes/
